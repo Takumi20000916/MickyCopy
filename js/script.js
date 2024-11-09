@@ -84,31 +84,31 @@ async function enableCam(event) {
             let capabilities = videoTrack.getCapabilities();
 
             // ズーム機能をデバッグしたい場合はコメントを外す
-            // capabilities.zoom = { min: 1, max: 10, step: 0.1 };
-            // settings.zoom = 5;
+            capabilities.zoom = { min: 1, max: 10, step: 0.1 };
+            settings.zoom = 5;
 
-            // // ズームUIを表示する
-            // if (capabilities.zoom) {
-            //     if (!capabilities.zoom.step) {
-            //         capabilities.zoom.step = 0.1;
-            //     }
-            //     document.getElementById('zoom_ui').innerHTML = `
-            //         <div class="row mt-2 mb-2">
-            //             <div class="col-2 text-end fs-4">
-            //                 <i class="bi bi-zoom-out"></i>
-            //             </div>  
-            //             <div class="col-8 text-center">
-            //                 <input type="range" class="form-range" min="${capabilities.zoom.min}" max="${capabilities.zoom.max}" value="${settings.zoom}" step="${capabilities.zoom.step}" id="zoom_ui_input">
-            //             </div>
-            //             <div class="col-2 text-start fs-4">
-            //                 <i class="bi bi-zoom-in"></i>
-            //             </div>
-            //         </div>
-            //         `;
-            //     document.getElementById('zoom_ui_input').addEventListener('input', (event) => {
-            //         videoTrack.applyConstraints({ advanced: [{ zoom: parseFloat(event.target.value) }] });
-            //     });
-            // }
+            // ズームUIを表示する
+            if (capabilities.zoom) {
+                if (!capabilities.zoom.step) {
+                    capabilities.zoom.step = 0.1;
+                }
+                document.getElementById('zoom_ui').innerHTML = `
+                    <div class="row mt-2 mb-2">
+                        <div class="col-2 text-end fs-4">
+                            <i class="bi bi-zoom-out"></i>
+                        </div>  
+                        <div class="col-8 text-center">
+                            <input type="range" class="form-range" min="${capabilities.zoom.min}" max="${capabilities.zoom.max}" value="${settings.zoom}" step="${capabilities.zoom.step}" id="zoom_ui_input">
+                        </div>
+                        <div class="col-2 text-start fs-4">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
+                    `;
+                document.getElementById('zoom_ui_input').addEventListener('input', (event) => {
+                    videoTrack.applyConstraints({ advanced: [{ zoom: parseFloat(event.target.value) }] });
+                });
+            }
 
             // データが読み込まれたら検出を開始
             video.addEventListener("loadeddata", predictWebcam);
